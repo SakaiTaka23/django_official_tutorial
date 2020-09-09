@@ -1,0 +1,2 @@
+# django_official_tutorial
+Django公式サイトのチュートリアルを進めていく！
