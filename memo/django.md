@@ -35,34 +35,6 @@
 
 
 
-## モデル
-
-* 作成したアプリ名のフォルダ内のmodels.py
-
-
-
-### モデルでのdbの型設定
-
-詳細
-
-https://docs.djangoproject.com/en/3.1/ref/models/fields/#field-types
-
-* クラスにはmodels.Modelを継承させる
-
-テンプレート
-
-カラム 名 = models.フィールド(引数)
-
-* モデルをマイグレートするときはsettings.pyのInstalledapps内に名前を入れておくこと
-* configを参照する？
-* クラス.apps.クラス＋config (アプリのapp.pyに書かれている)
-
-
-
-
-
-
-
 ## 管理者機能
 
 * 管理者の作り方
@@ -109,6 +81,30 @@ View:  def vote(request, question_id): ←question_idを直接引数とする
 
 
 
+## モデル
+
+* 作成したアプリ名のフォルダ内のmodels.py
+
+
+
+### モデルでのdbの型設定
+
+詳細
+
+https://docs.djangoproject.com/en/3.1/ref/models/fields/#field-types
+
+* クラスにはmodels.Modelを継承させる
+
+テンプレート
+
+カラム 名 = models.フィールド(引数)
+
+* モデルをマイグレートするときはsettings.pyのInstalledapps内に名前を入れておくこと
+* configを参照する？
+* クラス.apps.クラス＋config (アプリのapp.pyに書かれている)
+
+
+
 ## ビュー
 
 各アプリのviews.pyを指す
@@ -120,6 +116,8 @@ View:  def vote(request, question_id): ←question_idを直接引数とする
 
 →それ以外はユーザー次第
 
+
+
 ### 404の返し方
 
 * オブジェクトを探して見つからなかった場合404を返すことができる
@@ -130,6 +128,45 @@ View:  def vote(request, question_id): ←question_idを直接引数とする
 このとき見つからなかった場合は404を返す
 
 * get_list_or_404も存在する
+
+
+
+### reverse関数
+
+urlsに設定された名前を渡すと実際のurlを返す。一つ目の引数にurlの名前、2つ目以降には任意でその引数、キーワード引数などを受け取る
+
+
+
+### ジェネリックビュー
+
+* よく使用されるビューをまとめたもの
+
+***実装方法*** 
+
+1. url:ルートを書く
+
+   ```    path('', views.IndexView.as_view(), name='index'),```
+
+   views.実行する関数.as_view()
+
+   * urls.pyのルーティングで引数が必要なものは引数をpkにする
+
+2. view:
+
+   ```python views.py
+   from django.views import generic
+   
+   class IndexView(generic.ListView):
+       template_name = 'polls/index.html'
+       context_object_name = 'latest_question_list'
+   ```
+
+   * generic.ListView(ここは使いたいジェネリックビューによって変わる)を継承し、テンプレート名、テンプレートに渡す引数を指定
+   * テンプレート名はデフォルトでは　アプリ名/モデル名_index.htmlとなるが変更したい場合はtemplate_name変数をオーバーライドする
+
+   https://docs.djangoproject.com/en/3.1/topics/class-based-views/
+
+
 
 
 
@@ -155,8 +192,13 @@ returnの戻り値
 
 https://docs.djangoproject.com/ja/3.1/topics/templates/
 
+* タグ・フィルタといったものもある
+
+https://docs.djangoproject.com/en/3.1/ref/templates/builtins/
+
 * テンプレート関数は {% %}で囲むことによって使う
 * extends, block content, for, if　などがある
+* forループ内で {{ forloop.counter }}を入れるとそのループの回数を取得できる
 
 
 
@@ -176,9 +218,30 @@ url関数を使用して実装
 
 
 
+## formの作成
 
 
 
+* postメソッドを使うformを作成したときは csrfタグをつける
+
+```{% csrf_token %}```
+
+*  フォームから送られてきた情報を取得するには request.POST['取得したい要素']
+
+  →これらの値は常にstringとなっている
+
+  →その要素がない場合はKeyErrorが発生する
+
+* Djangoに限らずPOSTされたデータの処理に成功した場合はリダイレクトするべき
+
+### リダイレクト処理の方法
+
+```from django.http import HttpResponseRedirect```
+
+```        return HttpResponseRedirect(reverse('polls:results', args=(question.id,)))```
+
+* polls:resultsがリダイレクト先
+* argsが引数
 
 
 
