@@ -53,7 +53,27 @@
 
 ### 管理者ページのカスタマイズ
 
+admin.pyに別クラスを作成してfieldsetsを書き換えることによってそのデータの表示順や表示させるブロックの様子を変更することができる
 
+```python
+class QuestionAdmin(admin.ModelAdmin):
+    fieldsets = [
+        (None,               {'fields': ['question_text']}),
+        ('Date information', {'fields': ['pub_date']}),
+    ]
+
+admin.site.register(Question, QuestionAdmin)
+```
+
+
+
+* 同じクラスから複数のモデルを登録し、それらにリレーショナルな関係があった場合で新たにデータを登録するときそれらの関係も追加することができる
+
+**カスタマイズとしてできること**
+
+* 表示させるモデル情報の順番の変更
+* 関係するモデルを表示させる方法
+* 管理者ページそのもののデザイン
 
 
 
