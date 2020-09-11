@@ -7,7 +7,7 @@
 * テキスト(requirements.txt)などで保存されている時 
 * ``` pip install -r requirements.txt```
 * ↑のテキストを作成する時
-* ``` pipenv --python 3.8.5 ```
+* ``` pipenv run pip freeze > requirements.txt ```
 
 仮想環境を作成
 

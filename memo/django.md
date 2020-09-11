@@ -3,7 +3,7 @@
 
 
 *　実行
-*　```python manage.py rumserver```
+*　```python manage.py runserver```
 
 ``
 
