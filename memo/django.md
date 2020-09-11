@@ -16,8 +16,8 @@
 
 ### 日本語設定
 
-* languagecode = 'ja'
-* Time_zone = 'Asia/Tokyo'
+* LANGUAGE_CODE = 'ja'
+* TIME_ZONE = 'Asia/Tokyo'
 
 
 
@@ -35,7 +35,7 @@
 
 
 
-## 管理者機能
+## 管理者ページ
 
 * 管理者の作り方
 
@@ -48,6 +48,14 @@
 ```from .models import 〇〇 ```
 
 ```admin.site.register(〇〇)```
+
+
+
+### 管理者ページのカスタマイズ
+
+
+
+
 
 
 
@@ -275,6 +283,72 @@ python manage.py test 〇〇
 * テストクラスはそれぞれのモデル、ビューで分けるべき
 * それぞれが満たすべき条件に関してテストメソッドを分ける
 * メソッドの名前は何をテストしているかを表す
+
+
+
+## 静的ファイル
+
+* Djangoではimgはもちろん、js,cssも静的ファイルに含まれる
+
+* 各アプリごとに静的ファイルのフォルダを作成し、サーバーに集めさせることもできる
+
+* 場所は各アプリのstaticフォルダとなっている。テンプレートファイルと同じようにそのフォルダ内にもクラス名のフォルダを作成する
+
+  →settings.pyのSTATIC_URLで定義されている
+
+  →画像を保存する場合はその中にまたimagesフォルダを作成してその中に保存する
+
+  
+
+**読み込み方法**
+
+```python
+{% load static %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'polls/style.css' %}">
+```
+
+* 実際にテンプレート側で読み込むときは {% load static %} 関数を使った後
+* staticタグで読み込む staticタグはファイルまでの絶対パスを生成する
+
+**css内で画像の場合**
+
+```url("images/background.gif") ```
+
+* url関数を使用して読み込む
+* html内の場合はcssと同じように読み込む
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
