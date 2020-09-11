@@ -7,4 +7,4 @@ Django公式サイトのチュートリアルを進めていく！
 # 参考
 https://docs.djangoproject.com/en/3.1/intro/tutorial01/
 
-チュートリアルは 01 ~ 09 まで
+チュートリアルは 01 ~ 07 まで
